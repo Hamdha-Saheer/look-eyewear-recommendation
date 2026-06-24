@@ -1,0 +1,10 @@
+﻿venv/
+data/
+data_clean/
+uploads/
+__pycache__/
+*.pth
+*.h5
+mlruns/
+logs/
+*.zip

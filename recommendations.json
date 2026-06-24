@@ -1,0 +1,320 @@
+{
+  "oval": {
+    "male": {
+      "description": "Balanced proportions, slightly wider cheekbones, gently rounded jaw",
+      "tip": "Oval faces suit almost any frame shape. Try bold or classic styles.",
+      "best": [
+        {
+          "style": "wayfarer",
+          "name": "Wayfarer",
+          "reason": "Classic thick frame balances your even proportions"
+        },
+        {
+          "style": "aviator",
+          "name": "Aviator",
+          "reason": "Timeless teardrop lenses complement oval symmetry"
+        },
+        {
+          "style": "rectangle",
+          "name": "Rectangle",
+          "reason": "Clean angular lines add definition"
+        },
+        {
+          "style": "browline",
+          "name": "Browline",
+          "reason": "Bold top frame highlights your cheekbones"
+        },
+        {
+          "style": "geometric",
+          "name": "Geometric",
+          "reason": "Unique angular shape adds personality"
+        }
+      ],
+      "avoid": [
+        "Very oversized frames that hide the face"
+      ]
+    },
+    "female": {
+      "description": "Balanced proportions, gently rounded jawline, elegant symmetry",
+      "tip": "Your balanced face suits almost any frame. Experiment with bold styles.",
+      "best": [
+        {
+          "style": "cateye",
+          "name": "Cat-eye",
+          "reason": "Upswept corners beautifully complement oval symmetry"
+        },
+        {
+          "style": "aviator",
+          "name": "Aviator",
+          "reason": "Classic teardrop shape enhances your natural balance"
+        },
+        {
+          "style": "rimless",
+          "name": "Rimless",
+          "reason": "Subtle frames let your features take centre stage"
+        },
+        {
+          "style": "round",
+          "name": "Round",
+          "reason": "Soft curves echo your balanced proportions"
+        },
+        {
+          "style": "geometric",
+          "name": "Geometric",
+          "reason": "Bold angular frames create an elegant contrast"
+        }
+      ],
+      "avoid": [
+        "Frames that completely hide your face structure"
+      ]
+    }
+  },
+  "round": {
+    "male": {
+      "description": "Equal face width and height, full cheeks, softly rounded jaw",
+      "tip": "Angular frames add definition and make your face appear longer.",
+      "best": [
+        {
+          "style": "rectangle",
+          "name": "Rectangle",
+          "reason": "Strong horizontal lines elongate and define"
+        },
+        {
+          "style": "wayfarer",
+          "name": "Wayfarer",
+          "reason": "Slight angularity balances soft facial curves"
+        },
+        {
+          "style": "browline",
+          "name": "Browline",
+          "reason": "Strong top frame adds vertical structure"
+        },
+        {
+          "style": "geometric",
+          "name": "Geometric",
+          "reason": "Angular shapes contrast with soft features"
+        }
+      ],
+      "avoid": [
+        "Round frames — they echo the face shape and add unwanted width",
+        "Small oval frames"
+      ]
+    },
+    "female": {
+      "description": "Soft circular shape, full cheeks, rounded and gentle chin",
+      "tip": "Choose frames with angles or strong lines to elongate and define.",
+      "best": [
+        {
+          "style": "cateye",
+          "name": "Cat-eye",
+          "reason": "Lifted outer corners slim and define the face"
+        },
+        {
+          "style": "rectangle",
+          "name": "Rectangle",
+          "reason": "Straight lines beautifully contrast round softness"
+        },
+        {
+          "style": "browline",
+          "name": "Browline",
+          "reason": "Bold top frame lifts and elongates"
+        },
+        {
+          "style": "geometric",
+          "name": "Geometric",
+          "reason": "Angular shapes add definition to soft features"
+        }
+      ],
+      "avoid": [
+        "Round frames",
+        "Circular frames - add unwanted width"
+      ]
+    }
+  },
+  "square": {
+    "male": {
+      "description": "Strong angular jawline, roughly equal forehead and jaw width",
+      "tip": "Rounded or curved frames soften your strong angular features.",
+      "best": [
+        {
+          "style": "round",
+          "name": "Round",
+          "reason": "Circular lenses soften a strong angular jaw"
+        },
+        {
+          "style": "aviator",
+          "name": "Aviator",
+          "reason": "Curved teardrop shape balances sharp angles"
+        },
+        {
+          "style": "rimless",
+          "name": "Rimless",
+          "reason": "Minimal frame softens without competing with jaw"
+        },
+        {
+          "style": "cateye",
+          "name": "Cat-eye",
+          "reason": "Upswept curves counterbalance square edges"
+        }
+      ],
+      "avoid": [
+        "Rectangle frames — they emphasise squareness",
+        "Very angular geometric frames"
+      ]
+    },
+    "female": {
+      "description": "Strong jawline, prominent cheekbones, powerful face structure",
+      "tip": "Curved frames soften strong features elegantly.",
+      "best": [
+        {
+          "style": "round",
+          "name": "Round",
+          "reason": "Soft circles beautifully balance a square jaw"
+        },
+        {
+          "style": "cateye",
+          "name": "Cat-eye",
+          "reason": "Curved upswept corners soften angular strength"
+        },
+        {
+          "style": "aviator",
+          "name": "Aviator",
+          "reason": "Gentle teardrop lenses contrast strong angles"
+        },
+        {
+          "style": "rimless",
+          "name": "Rimless",
+          "reason": "Delicate frames let your strong features shine"
+        }
+      ],
+      "avoid": [
+        "Rectangle frames",
+        "Hard angular geometric frames"
+      ]
+    }
+  },
+  "heart": {
+    "male": {
+      "description": "Wide forehead, high cheekbones, narrow pointed chin",
+      "tip": "Bottom-heavy or light frames balance your wider forehead.",
+      "best": [
+        {
+          "style": "aviator",
+          "name": "Aviator",
+          "reason": "Wider bottom draws attention down, balancing forehead"
+        },
+        {
+          "style": "rimless",
+          "name": "Rimless",
+          "reason": "Light frames avoid adding width at the top"
+        },
+        {
+          "style": "browline",
+          "name": "Browline",
+          "reason": "Frames that sit low balance the forehead"
+        },
+        {
+          "style": "rectangle",
+          "name": "Rectangle",
+          "reason": "Horizontal lines balance the wider upper face"
+        }
+      ],
+      "avoid": [
+        "Cat-eye frames - they add width at top",
+        "Very top-heavy frames"
+      ]
+    },
+    "female": {
+      "description": "Wide forehead, high cheekbones, delicate narrow pointed chin",
+      "tip": "Light or bottom-heavy frames complement your face beautifully.",
+      "best": [
+        {
+          "style": "aviator",
+          "name": "Aviator",
+          "reason": "Wider base balances the narrow chin perfectly"
+        },
+        {
+          "style": "rimless",
+          "name": "Rimless",
+          "reason": "Delicate frames highlight your fine features"
+        },
+        {
+          "style": "rectangle",
+          "name": "Rectangle",
+          "reason": "Clean lines balance the wider upper face"
+        },
+        {
+          "style": "round",
+          "name": "Round",
+          "reason": "Soft bottom curves complement a pointed chin"
+        }
+      ],
+      "avoid": [
+        "Cat-eye frames - add unwanted width at forehead",
+        "Oversized top-heavy frames"
+      ]
+    }
+  },
+  "oblong": {
+    "male": {
+      "description": "Longer than wide, high forehead, long narrow chin",
+      "tip": "Wide frames add width and make your face appear shorter and balanced.",
+      "best": [
+        {
+          "style": "wayfarer",
+          "name": "Wayfarer",
+          "reason": "Wide frame adds breadth to a long narrow face"
+        },
+        {
+          "style": "round",
+          "name": "Round",
+          "reason": "Circular lenses add width and shorten appearance"
+        },
+        {
+          "style": "browline",
+          "name": "Browline",
+          "reason": "Strong horizontal top adds width at forehead"
+        },
+        {
+          "style": "geometric",
+          "name": "Geometric",
+          "reason": "Wide angular shape balances elongated features"
+        }
+      ],
+      "avoid": [
+        "Narrow rectangle frames — emphasise length",
+        "Very small frames"
+      ]
+    },
+    "female": {
+      "description": "Longer than wide, elegant elongated features, high forehead",
+      "tip": "Wide decorative frames shorten the face and add beautiful balance.",
+      "best": [
+        {
+          "style": "cateye",
+          "name": "Cat-eye",
+          "reason": "Wide upswept frames add width and elegance"
+        },
+        {
+          "style": "wayfarer",
+          "name": "Wayfarer",
+          "reason": "Broad frame adds width to elongated features"
+        },
+        {
+          "style": "round",
+          "name": "Round",
+          "reason": "Circular width balances a long face beautifully"
+        },
+        {
+          "style": "browline",
+          "name": "Browline",
+          "reason": "Bold horizontal lines add width and structure"
+        }
+      ],
+      "avoid": [
+        "Narrow rectangle frames",
+        "Very small or vertical frames"
+      ]
+    }
+  }
+}

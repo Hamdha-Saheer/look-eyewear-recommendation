@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOK — Find. Try. Own.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:oklch(0.155 0.018 250);
+  --text:oklch(0.96 0.005 250);
+  --muted:oklch(0.72 0.02 250);
+  --muted2:oklch(0.6 0.02 250);
+  --cyan:oklch(0.84 0.1 195);
+  --gold:oklch(0.82 0.12 85);
+  --ink:oklch(0.16 0.02 250);
+  --card:oklch(0.19 0.02 250 / .85);
+  --border:oklch(0.30 0.03 250);
+}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  color:var(--text);min-height:100vh;
+  background:
+    radial-gradient(1000px 600px at 75% -5%,oklch(0.26 0.05 235/.5),transparent 60%),
+    radial-gradient(800px 500px at 5% 100%,oklch(0.24 0.05 195/.35),transparent 55%),
+    var(--bg);
+}
+.mono{font-family:'IBM Plex Mono',monospace;}
+@keyframes glow{0%,100%{opacity:.5;}50%{opacity:1;}}
+@keyframes blink{0%,100%{opacity:.2;}50%{opacity:1;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+@keyframes scanY{0%{transform:translateY(0%);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(95%);opacity:0;}}
+@keyframes gridmove{to{background-position:0 28px;}}
+@keyframes up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.up{animation:up .55s ease both;}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;border-bottom:1px solid oklch(0.28 0.02 250/.6);backdrop-filter:blur(6px);
+  position:sticky;top:0;z-index:20;background:oklch(0.155 0.018 250/.8);}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px;letter-spacing:.12em;}
+.logo-mark{width:30px;height:30px;border:1.5px solid var(--gold);border-radius:7px;
+  display:grid;place-items:center;position:relative;box-shadow:0 0 14px oklch(0.82 0.12 85/.35);}
+.logo-mark .ring{width:11px;height:11px;border:1.5px solid var(--cyan);border-radius:50%;}
+.logo-mark .dot{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--gold);}
+.la{color:var(--text);}.lb{color:var(--gold);}
+.nav-r{display:flex;align-items:center;gap:18px;font-size:11px;letter-spacing:.07em;color:var(--muted2);}
+.dot-live{display:flex;align-items:center;gap:5px;}
+.dot-live i{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:glow 1.8s infinite;box-shadow:0 0 7px var(--gold);}
+
+/* PAGE */
+main{max-width:1080px;margin:0 auto;padding:20px 20px 60px;}
+.screen{display:none;}.screen.active{display:block;}
+
+/* UPLOAD */
+.up-grid{display:grid;grid-template-columns:1fr 280px;gap:36px;align-items:center;min-height:480px;}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.15em;
+  color:var(--gold);border:1px solid oklch(0.4 0.08 85/.45);border-radius:100px;
+  padding:5px 13px;margin-bottom:16px;background:oklch(0.22 0.04 85/.12);}
+.badge i{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:blink 1.4s infinite;}
+.tg{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.tg span{font-size:9px;letter-spacing:.14em;color:var(--muted2);}
+.tg .tga{color:var(--gold);}
+h1{font-size:44px;line-height:1.06;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;}
+.grad{background:linear-gradient(100deg,var(--cyan),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.lede{font-size:14px;line-height:1.65;color:var(--muted);max-width:360px;margin-bottom:24px;}
+.lbl{font-size:9px;letter-spacing:.14em;color:var(--muted2);margin-bottom:7px;}
+.seg{display:inline-flex;gap:4px;padding:4px;border:1px solid oklch(0.28 0.02 250);
+  border-radius:10px;background:oklch(0.18 0.02 250/.6);margin-bottom:18px;}
+.seg button{font-family:'Space Grotesk';font-weight:500;font-size:13px;padding:8px 18px;
+  border-radius:7px;cursor:pointer;border:none;color:var(--muted);background:transparent;transition:all .2s;}
+.seg button.on{color:var(--ink);background:linear-gradient(100deg,var(--cyan),var(--gold));}
+.acts{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.btn-main{font-family:'Space Grotesk';font-weight:600;font-size:14px;
+  display:inline-flex;align-items:center;gap:9px;color:var(--ink);
+  background:linear-gradient(100deg,var(--cyan),var(--gold));border:none;
+  border-radius:10px;padding:12px 20px;cursor:pointer;transition:transform .15s;}
+.btn-main:hover{transform:translateY(-1px);}
+.btn-main .pin{width:7px;height:7px;border-radius:50%;border:2px solid var(--ink);}
+.btn-ghost{font-family:'Space Grotesk';font-weight:500;font-size:12px;
+  color:var(--text);background:oklch(0.22 0.02 250/.7);border:1px solid oklch(0.32 0.02 250);
+  border-radius:10px;padding:11px 16px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-ghost:hover{border-color:var(--gold);}
+.filebtn{font-size:11px;color:var(--muted);background:none;border:1px dashed oklch(0.36 0.02 250);
+  border-radius:8px;padding:10px 14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;transition:all .2s;}
+.filebtn:hover{border-color:var(--gold);color:var(--text);}
+.fname{font-size:10px;color:var(--gold);margin-top:8px;font-family:'IBM Plex Mono',monospace;}
+
+/* FRAME */
+.frame-wrap{position:relative;display:grid;place-items:center;}
+.glow{position:absolute;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(oklch(0.6 0.1 85/.22),transparent 65%);filter:blur(10px);
+  animation:floaty 5s ease-in-out infinite;pointer-events:none;}
+.frame{position:relative;width:240px;height:300px;border:1px solid oklch(0.36 0.06 85/.55);
+  border-radius:16px;overflow:hidden;background:linear-gradient(155deg,oklch(0.21 0.03 250),oklch(0.17 0.02 250));
+  animation:floaty 6s ease-in-out infinite;cursor:pointer;}
+.frame .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;}
+.frame.has-photo .photo{display:block;}
+.mesh{position:absolute;inset:0;background-image:
+  linear-gradient(oklch(0.7 0.1 85/.07) 1px,transparent 1px),
+  linear-gradient(90deg,oklch(0.7 0.1 85/.07) 1px,transparent 1px);
+  background-size:28px 28px;animation:gridmove 3s linear infinite;}
+.nodes{position:absolute;inset:0;}
+.node{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);animation:blink 2s infinite;}
+.corners span{position:absolute;width:13px;height:13px;border-color:var(--gold);border-style:solid;opacity:.7;}
+.corners .tl{top:9px;left:9px;border-width:2px 0 0 2px;}
+.corners .tr{top:9px;right:9px;border-width:2px 2px 0 0;}
+.corners .bl{bottom:9px;left:9px;border-width:0 0 2px 2px;}
+.corners .br{bottom:9px;right:9px;border-width:0 2px 2px 0;}
+.scanline{position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  box-shadow:0 0 8px var(--gold);animation:scanY 2.6s ease-in-out infinite;}
+.frame-cap{position:absolute;bottom:9px;left:0;right:0;text-align:center;
+  font-size:8px;letter-spacing:.1em;color:oklch(0.58 0.06 85);font-family:'IBM Plex Mono',monospace;}
+
+/* SCANNING */
+.scanning{display:flex;align-items:center;justify-content:center;min-height:460px;}
+.scan-inner{text-align:center;}
+.spinner{position:relative;width:100px;height:100px;margin:0 auto 22px;}
+.track{position:absolute;inset:0;border-radius:50%;border:2px solid oklch(0.24 0.02 250);}
+.arc1{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--gold);animation:spin .95s linear infinite;}
+.arc2{position:absolute;inset:7px;border-radius:50%;border:1.5px solid transparent;border-top-color:var(--cyan);animation:spin .6s linear infinite reverse;}
+.pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:var(--gold);}
+.scanning h2{font-size:24px;font-weight:700;margin-bottom:8px;}
+.scan-step{font-size:10px;letter-spacing:.15em;color:var(--gold);}
+
+/* RESULTS */
+.res-grid{display:grid;grid-template-columns:250px 1fr;gap:24px;align-items:start;}
+.sticky{position:sticky;top:72px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:18px;backdrop-filter:blur(10px);}
+.ring-wrap{position:relative;display:flex;justify-content:center;margin-bottom:10px;}
+.ring-mid{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;}
+.pred-shape{font-size:15px;font-weight:700;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;}
+.pred-conf{font-size:8px;letter-spacing:.1em;color:var(--muted2);margin-top:2px;}
+.pred-desc{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:8px;}
+.second-hd{font-size:8px;letter-spacing:.12em;color:var(--muted2);margin-bottom:5px;}
+.barrow{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:10px;}
+.barrow .nm{min-width:48px;text-transform:capitalize;color:var(--muted);}
+.barrow .bar{flex:1;height:3px;background:oklch(0.24 0.02 250);border-radius:2px;overflow:hidden;}
+.barrow .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold));}
+.barrow .pp{min-width:28px;text-align:right;color:var(--muted2);font-size:9px;}
+
+/* RECS */
+.recs-head{margin-bottom:14px;}
+.recs-kick{font-size:9px;letter-spacing:.14em;color:var(--gold);margin-bottom:3px;}
+.recs-head h2{font-size:21px;font-weight:700;}
+
+/* STYLE BLOCK */
+.sblock{background:oklch(0.18 0.02 250/.7);border:1px solid oklch(0.26 0.03 250);
+  border-radius:12px;margin-bottom:10px;overflow:hidden;transition:border-color .2s;}
+.sblock:hover{border-color:oklch(0.38 0.06 85/.5);}
+.sblock-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;background:oklch(0.20 0.02 250/.5);
+  border-bottom:1px solid oklch(0.24 0.02 250);}
+.sblock-left{flex:1;min-width:0;}
+.sblock-tag{font-size:8px;letter-spacing:.1em;color:var(--gold);margin-bottom:1px;}
+.sblock-name{font-size:13px;font-weight:600;}
+.sblock-why{font-size:10px;color:var(--muted);margin-top:1px;}
+.tryon-btn{font-family:'Space Grotesk';font-weight:600;font-size:11px;padding:6px 13px;
+  background:linear-gradient(100deg,var(--cyan),var(--gold));color:var(--ink);
+  border:none;border-radius:7px;cursor:pointer;flex-shrink:0;margin-left:10px;transition:transform .15s;}
+.tryon-btn:hover{transform:translateY(-1px);}
+
+/* GLASSES GRID — wraps, never overflows */
+.g-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:7px;
+  padding:10px 12px;
+}
+.g-item{
+  aspect-ratio:2.2;
+  background:oklch(0.16 0.02 250);
+  border:2px solid transparent;
+  border-radius:8px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  padding:5px;
+  position:relative;
+  transition:all .2s;
+  overflow:hidden;
+}
+.g-item img{max-width:100%;max-height:100%;object-fit:contain;}
+.g-item:hover{border-color:oklch(0.42 0.06 85/.4);}
+.g-item.sel{border-color:var(--gold);box-shadow:0 0 10px oklch(0.82 0.12 85/.28);}
+.g-n{position:absolute;bottom:2px;right:4px;font-size:7px;color:var(--muted2);font-family:'IBM Plex Mono',monospace;}
+
+/* AVOID / TIP */
+.avoid-row{display:flex;gap:9px;background:oklch(0.19 0.04 30/.3);
+  border:1px solid oklch(0.36 0.08 30/.35);border-radius:9px;padding:10px 12px;margin-top:8px;}
+.avoid-ic{width:20px;height:20px;border-radius:50%;background:oklch(0.42 0.1 30/.4);
+  display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;color:oklch(0.78 0.1 30);}
+.avoid-hd{font-size:8px;letter-spacing:.1em;color:oklch(0.62 0.08 30);margin-bottom:2px;}
+.avoid-tx{font-size:11px;color:var(--muted);}
+.tip-row{font-size:10px;color:var(--cyan);margin-top:8px;padding:8px 11px;
+  border-left:2px solid var(--cyan);background:oklch(0.19 0.04 195/.2);border-radius:0 6px 6px 0;}
+.manual-box{margin-top:14px;background:oklch(0.19 0.03 250/.5);
+  border:1px solid var(--border);border-radius:10px;padding:12px;}
+.manual-hd{font-size:8px;letter-spacing:.1em;color:var(--gold);margin-bottom:8px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{font-family:'Space Grotesk';font-size:11px;font-weight:500;padding:6px 12px;
+  border-radius:6px;cursor:pointer;border:1px solid oklch(0.32 0.03 250);
+  background:oklch(0.21 0.02 250/.7);color:var(--muted);text-transform:capitalize;transition:all .2s;}
+.chip:hover{border-color:var(--gold);color:var(--text);}
+.chip.on-chip{border-color:var(--gold);color:var(--gold);}
+
+/* MODAL — full image */
+.modal{position:fixed;inset:0;z-index:50;display:none;
+  align-items:center;justify-content:center;padding:16px;
+  background:oklch(0.10 0.02 250/.92);backdrop-filter:blur(8px);}
+.modal.open{display:flex;}
+.mbox{background:oklch(0.18 0.02 250);border:1px solid oklch(0.31 0.03 250);
+  border-radius:15px;overflow:hidden;width:100%;max-width:480px;
+  display:flex;flex-direction:column;max-height:90vh;}
+.mbar{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 15px;border-bottom:1px solid oklch(0.25 0.02 250);flex-shrink:0;}
+.mtitle{font-size:10px;letter-spacing:.1em;color:var(--gold);}
+.mclose{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;
+  width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:5px;}
+.mclose:hover{background:oklch(0.25 0.02 250);color:var(--text);}
+.mbody{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;
+  min-height:160px;background:oklch(0.13 0.01 250);}
+.mloading{padding:40px;text-align:center;font-size:10px;letter-spacing:.1em;color:var(--muted);}
+/* THE KEY FIX — image displays properly */
+#modal-img{
+  display:none;
+  width:100%;
+  height:auto;
+  max-height:70vh;
+  object-fit:contain;
+}
+.mfoot{padding:10px 14px;display:flex;justify-content:flex-end;
+  border-top:1px solid oklch(0.25 0.02 250);flex-shrink:0;}
+.dl-btn{font-family:'Space Grotesk';font-size:11px;font-weight:500;padding:7px 14px;
+  border-radius:7px;background:oklch(0.22 0.03 250);border:1px solid oklch(0.32 0.03 250);
+  color:var(--text);cursor:pointer;transition:all .2s;}
+.dl-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);
+  z-index:60;opacity:0;background:oklch(0.19 0.03 30);
+  border:1px solid oklch(0.45 0.1 30/.55);color:oklch(0.88 0.05 30);
+  padding:10px 16px;border-radius:9px;font-size:12px;transition:all .28s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:800px){
+  .up-grid{grid-template-columns:1fr;gap:18px;}
+  .frame-wrap{order:-1;}
+  .frame{width:200px;height:250px;}.glow{width:200px;height:200px;}
+  h1{font-size:34px;}
+  .res-grid{grid-template-columns:1fr;}
+  .sticky{position:static;}
+  main{padding:14px 12px 48px;}
+  header{padding:10px 14px;}
+  .nav-r span:first-child{display:none;}
+  .g-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark"><div class="ring"></div><div class="dot"></div></div>
+    <span class="la">L</span><span class="lb">O</span><span class="la">O</span><span class="lb">K</span>
+  </div>
+  <div class="nav-r mono">
+    <span>LEARNING · OPTICAL · OPTIMIZATION · KNOWLEDGE</span>
+    <span class="dot-live"><i></i>ONLINE</span>
+  </div>
+</header>
+
+<main>
+
+<!-- UPLOAD -->
+<section class="screen active" id="screen-upload">
+<div class="up-grid up">
+  <div>
+    <div class="badge mono"><i></i>FACE GEOMETRY ANALYSIS</div>
+    <div class="tg">
+      <span class="tga">FIND YOUR LOOK</span><span>·</span>
+      <span>TRY YOUR LOOK</span><span>·</span><span>OWN YOUR LOOK</span>
+    </div>
+    <h1>Frames that fit<br>the face <span class="grad">you were<br>born with.</span></h1>
+    <p class="lede">Upload a photo. Our CNN maps your facial geometry, classifies your face shape, and recommends eyewear — then lets you try it on instantly.</p>
+    <div class="lbl mono">SELECT PROFILE</div>
+    <div class="seg">
+      <button id="g-male" class="on" data-g="male">Male</button>
+      <button id="g-female" data-g="female">Female</button>
+    </div>
+    <div class="acts">
+      <button class="btn-main" id="run-btn"><span class="pin"></span>Run Analysis</button>
+      <button class="filebtn" id="file-btn">＋ Choose photo</button>
+      <input type="file" id="file-input" accept="image/png,image/jpeg,image/jpg,image/webp" hidden>
+    </div>
+    <div class="fname mono" id="filename"></div>
+  </div>
+  <div class="frame-wrap">
+    <div class="glow"></div>
+    <div class="frame" id="dropzone">
+      <img class="photo" id="preview" alt="">
+      <div class="mesh"></div>
+      <div class="nodes">
+        <div class="node" style="top:39%;left:27%"></div>
+        <div class="node" style="top:39%;right:27%"></div>
+        <div class="node" style="top:54%;left:49%"></div>
+        <div class="node" style="top:71%;left:29%"></div>
+        <div class="node" style="top:71%;right:29%"></div>
+      </div>
+      <div class="corners">
+        <span class="tl"></span><span class="tr"></span>
+        <span class="bl"></span><span class="br"></span>
+      </div>
+      <div class="scanline"></div>
+      <div class="frame-cap mono" id="frame-cap">DROP PHOTO · 468 LANDMARKS</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SCANNING -->
+<section class="screen" id="screen-scanning">
+<div class="scanning"><div class="scan-inner up">
+  <div class="spinner">
+    <div class="track"></div><div class="arc1"></div><div class="arc2"></div>
+    <div class="pct mono" id="scan-pct">0%</div>
+  </div>
+  <h2>Mapping facial geometry</h2>
+  <div class="scan-step mono" id="scan-step">INITIALIZING</div>
+</div></div>
+</section>
+
+<!-- RESULTS -->
+<section class="screen" id="screen-results">
+<div class="res-grid up">
+  <!-- LEFT -->
+  <div class="sticky">
+    <div class="card">
+      <div class="lbl mono" style="margin-bottom:10px;">PREDICTION</div>
+      <div class="ring-wrap">
+        <svg width="120" height="120" viewBox="0 0 150 150">
+          <circle cx="75" cy="75" r="64" fill="none" stroke="oklch(0.26 0.02 250)" stroke-width="8"/>
+          <circle id="conf-ring" cx="75" cy="75" r="64" fill="none"
+            stroke="url(#rg)" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="402" stroke-dashoffset="402"/>
+          <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="oklch(0.84 0.1 195)"/>
+            <stop offset="1" stop-color="oklch(0.82 0.12 85)"/>
+          </linearGradient></defs>
+        </svg>
+        <div class="ring-mid"><div>
+          <div class="pred-shape" id="r-shape">—</div>
+          <div class="pred-conf mono" id="r-conf">—</div>
+        </div></div>
+      </div>
+      <div class="pred-desc" id="r-desc"></div>
+      <div id="r-second" style="margin-bottom:8px;"></div>
+      <button class="btn-ghost" id="reset-btn" style="width:100%;justify-content:center;">↩ Scan another</button>
+    </div>
+  </div>
+  <!-- RIGHT -->
+  <div>
+    <div class="recs-head">
+      <div class="recs-kick mono" id="r-kick">RECOMMENDED FOR YOUR FACE</div>
+      <h2>Frames for you</h2>
+    </div>
+    <div id="r-recs"></div>
+    <div class="avoid-row" id="r-avoid-wrap" style="display:none;">
+      <div class="avoid-ic">!</div>
+      <div><div class="avoid-hd mono">AVOID</div><div class="avoid-tx" id="r-avoid"></div></div>
+    </div>
+    <div class="tip-row mono" id="r-tip" style="display:none;"></div>
+    <div class="manual-box" id="manual" style="display:none;">
+      <div class="manual-hd mono">NOT RIGHT? PICK YOUR SHAPE</div>
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="mbox">
+    <div class="mbar">
+      <span class="mtitle mono" id="mtitle">VIRTUAL TRY-ON</span>
+      <button class="mclose" id="mclose">✕</button>
+    </div>
+    <div class="mbody">
+      <div class="mloading mono" id="mloading">Rendering overlay…</div>
+      <img id="modal-img" alt="Try-on result">
+    </div>
+    <div class="mfoot" id="mfoot" style="display:none;">
+      <button class="dl-btn" id="dl-btn">↓ Download</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── state ── */
+let gender = 'male';
+let uploadedFile = null;
+let landmarks = null;
+let selImgs = {};   // style -> chosen filename
+
+const $ = id => document.getElementById(id);
+const $q = s => document.querySelector(s);
+
+/* ── screens ── */
+function show(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('screen-'+name).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── toast ── */
+function toast(msg){
+  const t=$q('.toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ── gender ── */
+document.querySelectorAll('.seg button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    gender=b.dataset.g;
+    document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));
+  });
+});
+
+/* ── file ── */
+const fi=$('file-input');
+const dz=$('dropzone');
+$('file-btn').addEventListener('click',()=>fi.click());
+dz.addEventListener('click',()=>fi.click());
+fi.addEventListener('change',e=>{if(e.target.files[0])setFile(e.target.files[0]);});
+['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('dragover');}));
+['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('dragover');}));
+dz.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)setFile(f);});
+
+function setFile(f){
+  if(!/image\/(png|jpe?g|webp)/.test(f.type)){toast('Please choose JPG, PNG or WebP.');return;}
+  uploadedFile=f;
+  $('filename').textContent='✓ '+f.name;
+  $('preview').src=URL.createObjectURL(f);
+  dz.classList.add('has-photo');
+  $('frame-cap').textContent='READY · '+(f.name.length>17?f.name.slice(0,17)+'…':f.name);
+}
+
+/* ── scan animation ── */
+const STEPS=[[15,'UPLOADING IMAGE'],[38,'DETECTING FACE'],[60,'EXTRACTING 468 LANDMARKS'],[82,'CLASSIFYING SHAPE']];
+let scanT=null;
+function startAnim(){
+  let i=0;$('scan-pct').textContent='0%';$('scan-step').textContent='INITIALIZING';
+  const tick=()=>{if(i>=STEPS.length)return;const[p,s]=STEPS[i++];$('scan-pct').textContent=p+'%';$('scan-step').textContent=s;scanT=setTimeout(tick,620);};
+  scanT=setTimeout(tick,380);
+}
+function stopAnim(){clearTimeout(scanT);}
+
+/* ── predict ── */
+$('run-btn').addEventListener('click',runPredict);
+
+async function runPredict(){
+  if(!uploadedFile){toast('Choose a photo first.');return;}
+  show('scanning');startAnim();
+  const fd=new FormData();
+  fd.append('gender',gender);
+  fd.append('image',uploadedFile);
+  try{
+    const res=await fetch('/predict',{method:'POST',body:fd});
+    const data=await res.json();
+    stopAnim();
+    if(!res.ok){toast(data.error||'Something went wrong.');show('upload');return;}
+    $('scan-pct').textContent='100%';$('scan-step').textContent='COMPLETE';
+    landmarks=data.landmarks||null;
+    setTimeout(()=>showResults(data),380);
+  }catch(e){stopAnim();toast('Cannot reach server.');show('upload');}
+}
+
+/* ── show results ── */
+function showResults(d){
+  const shape=(d.shape||'').toUpperCase();
+  const conf=d.confidence||0;
+  $('r-shape').textContent=shape;
+  $('r-conf').textContent=d.low_confidence?'MANUAL OVERRIDE':conf+'%';
+  $('r-kick').textContent='RECOMMENDED FOR '+shape+' FACE';
+  $('r-desc').textContent=d.description||'';
+
+  /* ring */
+  const ring=$('conf-ring'),C=402;
+  ring.style.transition='none';ring.style.strokeDashoffset=C;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    ring.style.transition='stroke-dashoffset 1.1s cubic-bezier(.3,.8,.3,1)';
+    ring.style.strokeDashoffset=C*(1-Math.min(conf,100)/100);
+  }));
+
+  /* second guess */
+  const sec=$('r-second');sec.innerHTML='';
+  const others=(d.top2||[]).filter(t=>t.shape.toLowerCase()!==d.shape.toLowerCase());
+  if(others.length){
+    const hd=document.createElement('div');hd.className='second-hd mono';hd.textContent='SECOND GUESS';sec.appendChild(hd);
+    others.forEach(t=>{
+      const row=document.createElement('div');row.className='barrow';
+      row.innerHTML=`<span class="nm">${t.shape}</span><div class="bar"><i style="width:${t.pct}%"></i></div><span class="pp">${t.pct}%</span>`;
+      sec.appendChild(row);
+    });
+  }
+
+  buildRecs(d.recommendations||[]);
+
+  const av=d.avoid||[];
+  if(av.length){$('r-avoid-wrap').style.display='flex';$('r-avoid').textContent=Array.isArray(av)?av.join(' · '):av;}
+  else{$('r-avoid-wrap').style.display='none';}
+
+  if(d.tip){$('r-tip').style.display='block';$('r-tip').textContent='↳ '+d.tip;}
+  else{$('r-tip').style.display='none';}
+
+  if(d.low_confidence){
+    $('manual').style.display='block';
+    const chips=$('chips');chips.innerHTML='';
+    ['heart','oblong','oval','round','square'].forEach(s=>{
+      const c=document.createElement('button');c.className='chip';c.textContent=s;
+      c.addEventListener('click',()=>pickShape(s,c));chips.appendChild(c);
+    });
+  }else{$('manual').style.display='none';}
+
+  show('results');
+}
+
+/* ── build recommendation blocks ── */
+function buildRecs(list){
+  const wrap=$('r-recs');wrap.innerHTML='';
+  selImgs={};
+
+  list.forEach((item,idx)=>{
+    const imgs=item.images||[];
+    if(!imgs.length)return;
+    selImgs[item.style]=imgs[0];
+
+    /* outer block */
+    const block=document.createElement('div');
+    block.className='sblock';
+
+    /* header */
+    const hdr=document.createElement('div');
+    hdr.className='sblock-hdr';
+    hdr.innerHTML=`
+      <div class="sblock-left">
+        <div class="sblock-tag mono">STYLE 0${idx+1}</div>
+        <div class="sblock-name">${item.name||item.style}</div>
+        <div class="sblock-why">${item.reason||''}</div>
+      </div>
+      <button class="tryon-btn">◎ Try on</button>`;
+    block.appendChild(hdr);
+
+    /* glasses grid — wraps on all screen sizes */
+    const grid=document.createElement('div');
+    grid.className='g-grid';
+    grid.id='gg-'+item.style;
+
+    imgs.forEach((file,i)=>{
+      const cell=document.createElement('div');
+      cell.className='g-item'+(i===0?' sel':'');
+      cell.id='gi-'+item.style+'-'+i;
+      const img=document.createElement('img');
+      img.src='/static/glasses/'+file;
+      img.alt=item.name+' '+(i+1);
+      img.loading='lazy';
+      const num=document.createElement('span');
+      num.className='g-n mono';num.textContent=String(i+1).padStart(2,'0');
+      cell.appendChild(img);cell.appendChild(num);
+      cell.addEventListener('click',()=>{
+        document.querySelectorAll('#gg-'+item.style+' .g-item').forEach(x=>x.classList.remove('sel'));
+        cell.classList.add('sel');
+        selImgs[item.style]=file;
+      });
+      grid.appendChild(cell);
+    });
+    block.appendChild(grid);
+    wrap.appendChild(block);
+
+    /* try-on handler — must be after block added */
+    hdr.querySelector('.tryon-btn').addEventListener('click',()=>{
+      doTryOn(item.style, selImgs[item.style], item.name);
+    });
+  });
+}
+
+/* ── manual shape pick ── */
+async function pickShape(shape,btn){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on-chip'));
+  btn.classList.add('on-chip');
+  try{
+    const res=await fetch('/predict_shape',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({shape,gender})
+    });
+    const d=await res.json();
+    if(!res.ok){toast(d.error||'Error');return;}
+    $('r-shape').textContent=(d.shape||shape).toUpperCase();
+    $('r-conf').textContent='MANUAL OVERRIDE';
+    $('r-kick').textContent='RECOMMENDED FOR '+(d.shape||shape).toUpperCase()+' FACE';
+    $('r-desc').textContent=d.description||'';
+    buildRecs(d.recommendations||[]);
+    if((d.avoid||[]).length){$('r-avoid-wrap').style.display='flex';$('r-avoid').textContent=Array.isArray(d.avoid)?d.avoid.join(' · '):d.avoid;}
+    if(d.tip){$('r-tip').style.display='block';$('r-tip').textContent='↳ '+d.tip;}
+    toast('Updated for '+shape+'.');
+  }catch(e){toast('Cannot reach server.');}
+}
+
+/* ── TRY-ON ── */
+const modal=$q('.modal');
+const mimg=$('modal-img');
+const mloading=$('mloading');
+const mfoot=$('mfoot');
+
+async function doTryOn(style, imgFile, name){
+  /* safety checks */
+  if(!uploadedFile){toast('Upload a photo first then scan.');return;}
+  if(!landmarks){toast('Scan your photo first to get landmarks.');return;}
+  if(!imgFile){toast('Select a glasses design first.');return;}
+
+  /* open modal */
+  modal.classList.add('open');
+  $('mtitle').textContent=(name||style).toUpperCase()+' — VIRTUAL TRY-ON';
+  mloading.style.display='block';
+  mloading.textContent='Rendering overlay…';
+  mimg.style.display='none';
+  mfoot.style.display='none';
+
+  /* build form data */
+  const fd=new FormData();
+  fd.append('style',    style);
+  fd.append('img_file', imgFile);
+  fd.append('landmarks',JSON.stringify(landmarks));
+  fd.append('image',    uploadedFile);   /* original photo */
+
+  try{
+    const res=await fetch('/tryon',{method:'POST',body:fd});
+    if(!res.ok){
+      let msg='Overlay failed.';
+      try{msg=(await res.json()).error||msg;}catch(_){}
+      mloading.textContent='⚠ '+msg;
+      return;
+    }
+    const blob=await res.blob();
+    const url=URL.createObjectURL(blob);
+
+    mimg.onload=()=>{
+      mloading.style.display='none';
+      mimg.style.display='block';
+      mfoot.style.display='flex';
+    };
+    mimg.onerror=()=>{mloading.textContent='⚠ Could not display image.';};
+    mimg.src=url;
+
+    $('dl-btn').onclick=()=>{
+      const a=document.createElement('a');
+      a.href=url;a.download='LOOK_tryon.jpg';a.click();
+    };
+  }catch(e){
+    mloading.textContent='⚠ Cannot reach server.';
+  }
+}
+
+$('mclose').addEventListener('click',()=>modal.classList.remove('open'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open');});
+
+/* ── reset ── */
+$('reset-btn').addEventListener('click',()=>{
+  uploadedFile=null;landmarks=null;selImgs={};
+  $('preview').src='';dz.classList.remove('has-photo');
+  $('filename').textContent='';
+  $('frame-cap').textContent='DROP PHOTO · 468 LANDMARKS';
+  show('upload');
+});
+</script>
+</body>
+</html>

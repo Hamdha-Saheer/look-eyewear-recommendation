@@ -1,0 +1,66 @@
+@"
+name: LOOK CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask flask-cors numpy pillow werkzeug pytest
+
+    - name: Test imports
+      run: |
+        python -c "from flask import Flask; print('Flask OK')"
+        python -c "import numpy; print('NumPy OK')"
+        python -c "from PIL import Image; print('Pillow OK')"
+
+    - name: Test required files exist
+      run: |
+        python -c "
+        import os
+        required = ['app.py','face_utils.py','try_on.py','recommendations.json','requirements.txt']
+        for f in required:
+            assert os.path.exists(f), f'Missing: {f}'
+            print(f'  OK: {f}')
+        print('All required files present.')
+        "
+
+    - name: Validate recommendations.json
+      run: |
+        python -c "
+        import json
+        with open('recommendations.json') as f:
+            recs = json.load(f)
+        for shape in ['oval','round','square','heart','oblong']:
+            assert shape in recs
+            assert 'male' in recs[shape]
+            assert 'female' in recs[shape]
+        print('recommendations.json valid')
+        "
+
+    - name: Test Flask routes
+      run: |
+        python -c "
+        with open('app.py') as f:
+            code = f.read()
+        for route in ['/predict','/tryon','/predict_shape']:
+            assert route in code
+            print(f'Route found: {route}')
+        "
+"@ | Out-File -FilePath .github\workflows\test.yml -Encoding utf8
