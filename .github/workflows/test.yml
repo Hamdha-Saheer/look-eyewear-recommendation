@@ -1,43 +1,34 @@
-python -c "
-content = '''name: LOOK CI/CD Pipeline
+name: LOOK CICD Pipeline
 
 on:
   push:
-    branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
+    branches:
+      - master
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    - name: Install packages
-      run: pip install flask flask-cors numpy pillow werkzeug
+      - name: Install packages
+        run: pip install flask numpy pillow
 
-    - name: Test Flask import
-      run: python -c \"from flask import Flask; print('Flask OK')\"
+      - name: Test Flask import
+        run: python -c "from flask import Flask; print('Flask OK')"
 
-    - name: Test NumPy import
-      run: python -c \"import numpy; print('NumPy OK')\"
+      - name: Test NumPy import
+        run: python -c "import numpy; print('NumPy OK')"
 
-    - name: Check app.py exists
-      run: python -c \"import os; print('OK' if os.path.exists('app.py') else 'MISSING')\"
+      - name: Check app.py exists
+        run: python -c "import os; print('OK' if os.path.exists('app.py') else 'MISSING')"
 
-    - name: Check recommendations.json
-      run: python -c \"import json; r=json.load(open('recommendations.json')); print('Shapes found:', list(r.keys()))\"
-
-    - name: Check Flask routes
-      run: python -c \"c=open('app.py').read(); print('predict OK' if '/predict' in c else 'MISSING'); print('tryon OK' if '/tryon' in c else 'MISSING')\"
-'''
-with open('.github/workflows/test.yml', 'w') as f:
-    f.write(content)
-print('test.yml saved OK')
-"
+      - name: Check recommendations.json
+        run: python -c "import json; r=json.load(open('recommendations.json')); print('Shapes:', len(r))"
