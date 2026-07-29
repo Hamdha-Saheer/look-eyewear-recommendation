@@ -1,10 +1,30 @@
-﻿venv/
+﻿# --- Custom Project Folders ---
+venv/
 data/
 data_clean/
 uploads/
-__pycache__/
+
+# --- Model & Large Binary Files ---
 *.pth
 *.h5
+
+# --- MLflow & Tracking Artifacts ---
 mlruns/
+mlflow.db
+mlflow.db.bak
+
+# --- Logs & Compressed Files ---
 logs/
 *.zip
+
+# --- Python & Jupyter Cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# --- IDE & OS Files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

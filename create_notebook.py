@@ -1,4 +1,12 @@
-{
+import json
+
+nb = {
+ "nbformat": 4,
+ "nbformat_minor": 4,
+ "metadata": {
+  "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+  "language_info": {"name": "python", "version": "3.11.5"}
+ },
  "cells": [
   {
    "cell_type": "markdown",
@@ -21,7 +29,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Section 1 — Problem Definition\n",
+    "## Section 1 — Problem Definition (2 marks)\n",
     "\n",
     "### 1.1 Problem\n",
     "People waste time and money buying eyewear that does not suit their face shape. LOOK uses a CNN to detect face shape from a single photo, recommends suitable glasses styles, and provides virtual try-on AR.\n",
@@ -46,7 +54,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": None,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -113,7 +121,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": None,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -130,7 +138,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": None,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -228,7 +236,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": None,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -306,7 +314,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": None,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -328,26 +336,10 @@
     "print('Hamdha (013) | Hemara (012) | Lakshika (014)')"
    ]
   }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.9"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 4
+ ]
 }
+
+with open('LOOK_ML02_Report.ipynb', 'w') as f:
+    json.dump(nb, f, indent=1)
+
+print('Notebook saved OK')
